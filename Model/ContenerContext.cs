@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebApi02.Model
+namespace Pedidos_back.Model
 {
     public class ContenerContext : DbContext
     {
@@ -15,5 +15,8 @@ namespace WebApi02.Model
         }
 
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Producto> Productos { get; set; }
+        public DbSet<Estado> Estados { get; set; }
     }
 }
