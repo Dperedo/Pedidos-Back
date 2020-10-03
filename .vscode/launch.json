@@ -5,6 +5,9 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "launchBrowser": {
+                "enabled": false
+            },
             "name": ".NET Core Launch (web)",
             "type": "coreclr",
             "request": "launch",
@@ -13,10 +16,10 @@
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
-            "serverReadyAction": {
+            /*"serverReadyAction": {
                 "action": "openExternally",
                 "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-            },
+            },*/
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },

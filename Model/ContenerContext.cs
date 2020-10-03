@@ -11,7 +11,7 @@ namespace Pedidos_back.Model
         public ContenerContext(DbContextOptions<ContenerContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
         public DbSet<Usuario> Usuarios { get; set; }

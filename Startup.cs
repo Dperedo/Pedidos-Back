@@ -93,7 +93,7 @@ namespace Pedidos_back
             using (var scope = app.ApplicationServices.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetService<ContenerContext>();
-                    dbContext.Database.Migrate();
+                dbContext.Database.Migrate();
             }
         }
     }
