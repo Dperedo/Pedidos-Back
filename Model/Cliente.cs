@@ -11,8 +11,10 @@ namespace Pedidos_back.Model
         [Key]
         public Guid Id { set; get; }
         [StringLength(20)]
+        [Required]
         public string RUT { set; get; }
         [StringLength(20)]
+        [Required]
         public string RazonSocial { set; get; }
 
         public DateTime FechaDeCreacion { set; get; }

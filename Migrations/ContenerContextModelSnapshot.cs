@@ -29,10 +29,12 @@ namespace Pedidos_back.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("RUT")
+                        .IsRequired()
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
                     b.Property<string>("RazonSocial")
+                        .IsRequired()
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 

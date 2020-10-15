@@ -10,8 +10,8 @@ using Pedidos_back.Model;
 namespace Pedidos_back.Migrations
 {
     [DbContext(typeof(ContenerContext))]
-    [Migration("20201002225154_Insertar")]
-    partial class Insertar
+    [Migration("20201015225103_Inicial")]
+    partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,10 +31,12 @@ namespace Pedidos_back.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("RUT")
+                        .IsRequired()
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
                     b.Property<string>("RazonSocial")
+                        .IsRequired()
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 

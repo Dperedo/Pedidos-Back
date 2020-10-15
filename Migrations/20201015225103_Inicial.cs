@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Pedidos_back.Migrations
 {
-    public partial class Proyecto : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,8 +12,8 @@ namespace Pedidos_back.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    RUT = table.Column<string>(maxLength: 20, nullable: true),
-                    RazonSocial = table.Column<string>(maxLength: 20, nullable: true),
+                    RUT = table.Column<string>(maxLength: 20, nullable: false),
+                    RazonSocial = table.Column<string>(maxLength: 20, nullable: false),
                     FechaDeCreacion = table.Column<DateTime>(nullable: false),
                     Vigente = table.Column<bool>(nullable: false)
                 },

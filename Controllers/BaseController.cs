@@ -21,9 +21,9 @@ namespace Pedidos_back.Controllers
         }
 
         [HttpGet]
-        public virtual IActionResult Todos()
+        public virtual IActionResult Todos(string take = "10", string skip = "0")
         {
-            return Ok(repository.GetAll());
+            return Ok(repository.GetAll().Skip(Convert.ToInt32(skip)).Take(Convert.ToInt32(take)));
         }
 
         [HttpGet("{id}")]
@@ -76,7 +76,7 @@ namespace Pedidos_back.Controllers
                 return NotFound("no encontrado");
             }
             await repository.UpdateAsync(entity);
-            return Ok("Agregado");
+            return Ok();
         }
 
     }
