@@ -24,16 +24,33 @@ namespace Pedidos_back.Controllers
         }
 
         [HttpGet("query")]
-        public  IActionResult Todos1(string texto, string take = "10", string page = "1")
+        public  IActionResult Todos1(string texto, int? take = 10, int? page = 1)
         {
             int skip = 0;
 
-            if ( string.IsNullOrWhiteSpace(page) || !int.TryParse(page, out _)) page = "1";
-            if ( string.IsNullOrWhiteSpace(take) || !int.TryParse(take, out _)) take = "10";
+            if (!take.HasValue) take = 10;
+            if (!page.HasValue) page = 1;
 
-            if(Int32.Parse(page) > 0) skip = (Int32.Parse(page) - 1) * Convert.ToInt32(take);
-            
-            return Ok(repository.GetAll().Where(x => texto == null || EF.Functions.FreeText(x.RUT, texto) || EF.Functions.FreeText(x.RazonSocial, texto)).Skip(skip).Take(Convert.ToInt32(take)));
+            //if ( string.IsNullOrWhiteSpace(page) || !int.TryParse(page, out _)) page = "1";
+            //if ( string.IsNullOrWhiteSpace(take) || !int.TryParse(take, out _)) take = "10";
+
+            //if (Int32.Parse(page) > 0) skip = (Int32.Parse(page) - 1) * Convert.ToInt32(take);
+
+            skip = (page.Value - 1) * take.Value;
+
+            int count = repository.GetAll().Count();
+
+            var result = new { total = count, 
+                take = take, 
+                page = page, 
+                skip = skip, 
+                list = repository.GetAll().Where(x => texto == null || 
+                x.RUT.ToLower().Contains(texto.ToLower()) || 
+                x.RazonSocial.ToLower().Contains(texto.ToLower())
+                ).Skip(skip)
+                .Take(Convert.ToInt32(take))};
+
+            return Ok(result);
             // response = Ok(new {token = token}); x.RUT == texto
         }
 
