@@ -21,9 +21,9 @@ namespace Pedidos_back.Controllers
         }
 
         [HttpGet]
-        public virtual IActionResult Todos(string take = "10", string skip = "0")
+        public virtual IActionResult Todos()
         {
-            return Ok(repository.GetAll().Skip(Convert.ToInt32(skip)).Take(Convert.ToInt32(take)));
+            return Ok(repository.GetAll());
         }
 
         [HttpGet("{id}")]

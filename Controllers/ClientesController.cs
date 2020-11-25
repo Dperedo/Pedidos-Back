@@ -53,60 +53,32 @@ namespace Pedidos_back.Controllers
                 datos = datos.OrderByDescending(x => x.FechaDeCreacion);
             }
 
+            if (order == "RazonSocialAcending")
+            {
+                datos = datos.OrderBy(x => x.RazonSocial);
+            }
+            else if (order == "RazonSocialDescending")
+            {
+                datos = datos.OrderByDescending(x => x.RazonSocial);
+            }
 
+            if (order == "RUTAcending")
+            {
+                datos = datos.OrderBy(x => x.RUT);
+            }
+            else if (order == "RUTDescending")
+            {
+                datos = datos.OrderByDescending(x => x.RUT);
+            }
 
-
-            //if (order == "FechaDeCreacionAcending") {  
-            //    datos = repository.GetAll().Where(x => texto == null || 
-            //    x.RUT.ToLower().Contains(texto.ToLower()) || 
-            //    x.RazonSocial.ToLower().Contains(texto.ToLower())
-            //    ).OrderBy(x => x.FechaDeCreacion).Skip(skip)
-            //    .Take(Convert.ToInt32(take)); }
-            //    else if (order == "FechaDeCreacionDescending") {  
-            //    datos = repository.GetAll().Where(x => texto == null || 
-            //    x.RUT.ToLower().Contains(texto.ToLower()) || 
-            //    x.RazonSocial.ToLower().Contains(texto.ToLower())
-            //    ).OrderByDescending(x => x.FechaDeCreacion).Skip(skip)
-            //    .Take(Convert.ToInt32(take)); }
-
-                //if (order == "RazonSocialAcending") {  
-                //    datos = repository.GetAll().Where(x => texto == null || 
-                //    x.RUT.ToLower().Contains(texto.ToLower()) || 
-                //    x.RazonSocial.ToLower().Contains(texto.ToLower())
-                //    ).OrderBy(x => x.RazonSocial).Skip(skip)
-                //    .Take(Convert.ToInt32(take)); }
-                //    else if (order == "RazonSocialDescending") {  
-                //    datos = repository.GetAll().Where(x => texto == null || 
-                //    x.RUT.ToLower().Contains(texto.ToLower()) || 
-                //    x.RazonSocial.ToLower().Contains(texto.ToLower())
-                //    ).OrderByDescending(x => x.RazonSocial).Skip(skip)
-                //    .Take(Convert.ToInt32(take)); }
-
-                //if (order == "RUTAcending") {  
-                //    datos = repository.GetAll().Where(x => texto == null || 
-                //    x.RUT.ToLower().Contains(texto.ToLower()) || 
-                //    x.RazonSocial.ToLower().Contains(texto.ToLower())
-                //    ).OrderBy(x => x.RUT).Skip(skip)
-                //    .Take(Convert.ToInt32(take)); }
-                //    else if (order == "RUTDescending") {  
-                //    datos = repository.GetAll().Where(x => texto == null || 
-                //    x.RUT.ToLower().Contains(texto.ToLower()) || 
-                //    x.RazonSocial.ToLower().Contains(texto.ToLower())
-                //    ).OrderByDescending(x => x.RUT).Skip(skip)
-                //    .Take(Convert.ToInt32(take)); }
-
-                //if (order == "VigenteAcending") {  
-                //    datos = repository.GetAll().Where(x => texto == null || 
-                //    x.RUT.ToLower().Contains(texto.ToLower()) || 
-                //    x.RazonSocial.ToLower().Contains(texto.ToLower())
-                //    ).OrderBy(x => x.Vigente).Skip(skip)
-                //    .Take(Convert.ToInt32(take)); }
-                //    else if (order == "VigenteDescending") {  
-                //    datos = repository.GetAll().Where(x => texto == null || 
-                //    x.RUT.ToLower().Contains(texto.ToLower()) || 
-                //    x.RazonSocial.ToLower().Contains(texto.ToLower())
-                //    ).OrderByDescending(x => x.Vigente).Skip(skip)
-                //    .Take(Convert.ToInt32(take)); }
+            if (order == "VigenteAcending")
+            {
+                datos = datos.OrderBy(x => x.Vigente);
+            }
+            else if (order == "VigenteDescending")
+            {
+                datos = datos.OrderByDescending(x => x.Vigente);
+            }
 
             int count = repository.GetAll().Where(x => texto == null || 
                 x.RUT.ToLower().Contains(texto.ToLower()) || 

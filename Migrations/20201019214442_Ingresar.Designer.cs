@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pedidos_back.Model;
 
 namespace Pedidos_back.Migrations
 {
     [DbContext(typeof(ContenerContext))]
-    partial class ContenerContextModelSnapshot : ModelSnapshot
+    [Migration("20201019214442_Ingresar")]
+    partial class Ingresar
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,33 +48,6 @@ namespace Pedidos_back.Migrations
                     b.ToTable("Clientes");
                 });
 
-            modelBuilder.Entity("Pedidos_back.Model.DetallePedido", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("FechaDeCreacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("PedidoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ProductoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PedidoId");
-
-                    b.HasIndex("ProductoId");
-
-                    b.ToTable("DetallePedidos");
-                });
-
             modelBuilder.Entity("Pedidos_back.Model.Estado", b =>
                 {
                     b.Property<Guid>("Id")
@@ -86,41 +61,6 @@ namespace Pedidos_back.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Estados");
-                });
-
-            modelBuilder.Entity("Pedidos_back.Model.Pedido", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ClienteId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("EstadoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("FechaDeCreacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Observaciones")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("Secuencial")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<float>("Total")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClienteId");
-
-                    b.HasIndex("EstadoId");
-
-                    b.ToTable("Pedidos");
                 });
 
             modelBuilder.Entity("Pedidos_back.Model.Producto", b =>
@@ -181,28 +121,6 @@ namespace Pedidos_back.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Usuarios");
-                });
-
-            modelBuilder.Entity("Pedidos_back.Model.DetallePedido", b =>
-                {
-                    b.HasOne("Pedidos_back.Model.Pedido", null)
-                        .WithMany("DetallePedidos")
-                        .HasForeignKey("PedidoId");
-
-                    b.HasOne("Pedidos_back.Model.Producto", "Producto")
-                        .WithMany()
-                        .HasForeignKey("ProductoId");
-                });
-
-            modelBuilder.Entity("Pedidos_back.Model.Pedido", b =>
-                {
-                    b.HasOne("Pedidos_back.Model.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteId");
-
-                    b.HasOne("Pedidos_back.Model.Estado", "Estado")
-                        .WithMany()
-                        .HasForeignKey("EstadoId");
                 });
 #pragma warning restore 612, 618
         }

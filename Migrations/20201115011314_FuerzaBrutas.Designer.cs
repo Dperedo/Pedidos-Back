@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pedidos_back.Model;
 
 namespace Pedidos_back.Migrations
 {
     [DbContext(typeof(ContenerContext))]
-    partial class ContenerContextModelSnapshot : ModelSnapshot
+    [Migration("20201115011314_FuerzaBrutas")]
+    partial class FuerzaBrutas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
