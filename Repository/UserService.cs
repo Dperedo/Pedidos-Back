@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 //
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -34,11 +35,13 @@ namespace Pedidos_back.Repository
     {
         private ContenerContext context;
         private readonly AppSettings _appSettings;
+        private readonly IConfiguration config;
 
-        public UserService(ContenerContext contexto, IOptions<AppSettings> appSettings)
+        public UserService(ContenerContext contexto, IOptions<AppSettings> appSettings, IConfiguration _config)
         {
             context = contexto;
             _appSettings = appSettings.Value;
+            this.config = _config;
         }
 
         public string Authenticate(UsuarioDto usermodel)
@@ -168,7 +171,8 @@ namespace Pedidos_back.Repository
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Expires = DateTime.UtcNow.AddMinutes(config.GetValue<int>("Token:MinutesToExpire")),
+                // Expires = DateTime.UtcNow.AddMinutes(TimeSpan.Parse(config.GetValue<string>("Token:TimeToExpire")).Minutes),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -176,4 +180,5 @@ namespace Pedidos_back.Repository
         }
 
     }
+    // AddDays(7)
 }

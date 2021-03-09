@@ -7,6 +7,7 @@ namespace Pedidos_back.Model
 {
     public class Pedido : IModel
     {
+
         public Pedido() {
             this.FechaDeCreacion = DateTime.UtcNow;
         }

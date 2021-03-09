@@ -24,6 +24,7 @@ namespace Pedidos_back.Controllers
         }
 
         [HttpGet("query")]
+        [Authorize]
         public  IActionResult Todos1(string texto, string order = "FechaDeCreacionAcending", int? take = 10, int? page = 1)
         {
             int skip = 0;

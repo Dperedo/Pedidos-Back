@@ -36,7 +36,7 @@ namespace Pedidos_back
         {
             services.AddDbContext<ContenerContext>(opt =>
             //opt.UseSqlServer("Server=localhost\\sql2017;Database=Webapi03;User Id=sa; Password=sa1105"));
-            opt.UseSqlServer("Server=DIEGOPEREDO-PC\\SQLEXPRESS;Database=Pedidos;User Id=sa; Password=sa1102"));
+            opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
