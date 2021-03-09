@@ -122,7 +122,7 @@ namespace Pedidos_back.Repository
 
         //privado
 
-        private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             if (password == null) throw new ArgumentException("password");
             if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("no puede ser vacio");
