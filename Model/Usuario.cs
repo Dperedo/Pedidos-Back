@@ -1,16 +1,20 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
-namespace WebApi02.Model
+namespace Pedidos_back.Model
 {
     public class Usuario
     {
         [Key]
-        public int Id { get; set; }
-        [Required]
+        public Guid Id { get; set; }
         [Display(Name ="Username")]
         [StringLength(20)]
         public string Username { get; set; }
+        [StringLength(20)]
+        public string Nombre { get; set; }
+        [StringLength(20)]
+        public string RUT { get; set; }
         
         [JsonIgnore]
         public byte[] PasswordHash { get; set; }
