@@ -1,10 +1,19 @@
-namespace WebApi02.Model
+using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace Pedidos_back.Model
 {
     public class UsuarioDto
     {
 
-        public int Id { get; set; }
+        public Guid Id { get; set; }
+        [StringLength(20)]
         public string Username { get; set; }
+        [StringLength(20)]
+        public string Nombre { get; set; }
+        [StringLength(20)]
+        public string RUT { get; set; }
+        [StringLength(20)]
         public string Password { get; set; }
 
     }
