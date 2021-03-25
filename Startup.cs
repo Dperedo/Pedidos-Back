@@ -14,6 +14,9 @@ using Microsoft.EntityFrameworkCore;
 using Pedidos_back.Model;
 using Pedidos_back.Repository;
 
+using System.Reflection;
+using System.IO;
+
 
 //JWT
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -48,6 +51,7 @@ namespace Pedidos_back
             }));
 
             services.AddScoped<IUserService, UserService>();
+            //services.AddSwaggerGen();
 
         }
 
