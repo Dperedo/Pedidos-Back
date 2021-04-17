@@ -250,11 +250,17 @@ namespace Pedidos_back.Controllers
                     pedido.DetallePedidos.Add(detalle);
                 }
             }
+            // context.Entry<Client>(client).Property(x => x.DateTimeCreated).IsModified = false;
+            // db.Entry(model).Property(x => x.Token).State = PropertyState.Unmodified;
+            repository.Context.Entry<Pedido>(pedido).Property(x => x.Secuencial).IsModified = false;
+            // repository.Context.Entry(pedido).Property(x => x.Secuencial).State = propertystate.Unmodified
+            // repository.Context.Entry(pedido).Property(x => x.Secuencial).IsModified = false;
+            repository.Context.Update(pedido);
             repository.Context.SaveChanges();
 
 
 
-            return Ok("Agregado");
+            return Ok();
         }
 
     }
