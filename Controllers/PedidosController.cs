@@ -195,8 +195,12 @@ namespace Pedidos_back.Controllers
                 return NotFound("no encontrado");
             }
 
-            
-            var cliente = await repositoryCliente.GetByIdAsync(entity.Cliente.Id);
+            var cliente = await repository.Context
+                .Clientes
+                .AsNoTracking()
+                .SingleOrDefaultAsync(c => c.Id == entity.Cliente.Id);
+
+            //var cliente = await repositoryCliente.GetByIdAsync(entity.Cliente.Id);
             if (cliente != null)
             {
                 entity.Cliente = cliente;
@@ -212,52 +216,65 @@ namespace Pedidos_back.Controllers
             else
                 return BadRequest("Estado no existe");
 
-            foreach(var pd in entity.DetallePedidos)
+            try
             {
-                if(pd.Producto == null)
+
+                foreach (var pd in entity.DetallePedidos)
                 {
-                    return BadRequest("no especifica Producto");
+                    if (pd.Producto == null)
+                    {
+                        return BadRequest("no especifica Producto");
+                    }
+
+                    var producto = await repositoryProducto.GetByIdAsync(pd.Producto.Id);
+                    if (producto != null)
+                    {
+                        pd.Producto = producto;
+                    }
+                    else
+                        return BadRequest("no existe Producto");
+
                 }
 
-                var producto = await repositoryProducto.GetByIdAsync(pd.Producto.Id);
-                if (producto != null)
+                var pedido = repository.Context.Pedidos.Include(c => c.DetallePedidos)
+                    .Include(x=> x.Estado)
+                    .FirstOrDefault(g => g.Id == entity.Id);
+
+                repository.Context.Entry(pedido).CurrentValues.SetValues(entity);
+                pedido.Cliente = entity.Cliente;
+                pedido.Estado = entity.Estado;
+
+                var pedidoDetalles = pedido.DetallePedidos.ToList();
+                foreach (var pedidoDetalle in pedidoDetalles)
                 {
-                    pd.Producto = producto;
+                    var detalle = entity.DetallePedidos.SingleOrDefault(i => i.Id == pedidoDetalle.Id);
+                    if (detalle != null)
+                        repository.Context.Entry(pedidoDetalle).CurrentValues.SetValues(detalle);
+                    else
+                        repository.Context.Remove(pedidoDetalle);
                 }
-                else
-                    return BadRequest("no existe Producto");
 
-            }
-
-            var pedido = repository.Context.Pedidos.Include(c => c.DetallePedidos).FirstOrDefault(g => g.Id == entity.Id);
-            
-            repository.Context.Entry(pedido).CurrentValues.SetValues(entity);
-            
-            var pedidoDetalles = pedido.DetallePedidos.ToList();
-            foreach (var pedidoDetalle in pedidoDetalles)
-            {
-                var detalle = entity.DetallePedidos.SingleOrDefault(i => i.Id == pedidoDetalle.Id);
-                if (detalle != null)
-                    repository.Context.Entry(pedidoDetalle).CurrentValues.SetValues(detalle);
-                else
-                    repository.Context.Remove(pedidoDetalle);
-            }
-            
-            foreach (var detalle in entity.DetallePedidos)
-            {
-                if (pedidoDetalles.All(i => i.Id != detalle.Id))
+                foreach (var detalle in entity.DetallePedidos)
                 {
-                    pedido.DetallePedidos.Add(detalle);
+                    if (pedidoDetalles.All(i => i.Id != detalle.Id))
+                    {
+                        pedido.DetallePedidos.Add(detalle);
+                    }
                 }
-            }
-            // context.Entry<Client>(client).Property(x => x.DateTimeCreated).IsModified = false;
-            // db.Entry(model).Property(x => x.Token).State = PropertyState.Unmodified;
-            repository.Context.Entry<Pedido>(pedido).Property(x => x.Secuencial).IsModified = false;
-            // repository.Context.Entry(pedido).Property(x => x.Secuencial).State = propertystate.Unmodified
-            // repository.Context.Entry(pedido).Property(x => x.Secuencial).IsModified = false;
-            repository.Context.Update(pedido);
-            repository.Context.SaveChanges();
+                // context.Entry<Client>(client).Property(x => x.DateTimeCreated).IsModified = false;
+                // db.Entry(model).Property(x => x.Token).State = PropertyState.Unmodified;
+                
+                // repository.Context.Entry(pedido).Property(x => x.Secuencial).State = propertystate.Unmodified
+                // repository.Context.Entry(pedido).Property(x => x.Secuencial).IsModified = false;
+                repository.Context.Update(pedido);
+                repository.Context.Entry<Pedido>(pedido).Property(x => x.Secuencial).IsModified = false;
+                repository.Context.SaveChanges();
 
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
 
 
             return Ok();
