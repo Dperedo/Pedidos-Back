@@ -48,7 +48,7 @@ namespace Pedidos_back.Controllers
                 x.Cliente.RazonSocial.ToLower().Contains(texto.ToLower())
                 );
 
-            /*if (order == "FechaDeCreacionAcending")
+            if (order == "FechaDeCreacionAcending")
             {
                 datos = datos.OrderBy(x => x.FechaDeCreacion);
             }
@@ -82,7 +82,7 @@ namespace Pedidos_back.Controllers
             else if (order == "EstadoDescending")
             {
                 datos = datos.OrderByDescending(x => x.Estado.EstadoPedido);
-            }*/
+            }
 
             int count = repository.GetAll().Where(x => texto == null || 
                 x.Cliente.RazonSocial.ToLower().Contains(texto.ToLower())
