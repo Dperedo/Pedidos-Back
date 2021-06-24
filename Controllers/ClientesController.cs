@@ -82,6 +82,11 @@ namespace Pedidos_back.Controllers
                 datos = datos.OrderByDescending(x => x.Vigente);
             }
 
+            /*if (vigente == "true") 
+            {
+                datos = repository.GetAll().Where(x => x.Vigente == true);
+            }*/
+
             int count = repository.GetAll().Where(x => texto == null || 
                 x.RUT.ToLower().Contains(texto.ToLower()) || 
                 x.RazonSocial.ToLower().Contains(texto.ToLower())
@@ -98,6 +103,56 @@ namespace Pedidos_back.Controllers
 
             return Ok(result);
             // response = Ok(new {token = token}); x.RUT == texto
+        }
+
+        [HttpGet("vigente")]
+        public virtual IActionResult TodosVigente()
+        {
+            return Ok(repository.GetAll().Where(x => x.Vigente == true));
+        }
+
+        [HttpPost]
+        public override async Task<IActionResult> Insertar(Cliente entity)
+        {
+            var item = await repository.GetNoTrackedByIdAsync(entity.Id);
+            if (item != null)
+            {
+                if (entity.Id == item.Id)
+                {
+                    return Conflict("Ya existe Id");
+                } 
+                else if (entity.RUT == item.RUT)
+                {
+                    return Conflict("Ya existe este rut");
+                }
+            }
+            return Ok(await repository.InsertAsync(entity));
+        }
+
+        [HttpPut("{id}")]
+        public override async Task<IActionResult> Actualizar(Guid id, Cliente entity)
+        {
+            if(id != entity.Id)
+            {
+                return BadRequest();
+            }
+
+            //var item = await repository.GetNoTrackedByIdAsync(id);
+            var existe = await repository.GetAll().AsNoTracking().AnyAsync(x => x.Id == entity.Id);
+            if (!existe)
+            {
+                return NotFound("No encontrado");
+            }
+
+            //var info = repository.GetAll().AsNoTracking().Where(x => x.Id != entity.Id && x.RUT == entity.RUT).SingleOrDefaultAsync();
+            var info = await repository.GetAll().AsNoTracking().AnyAsync(x => x.Id != entity.Id && x.RUT == entity.RUT);
+            if(info)
+            {
+                return BadRequest();
+            }
+
+            await repository.UpdateAsync(entity);
+            return Ok();
         }
 
     }

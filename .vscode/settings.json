@@ -1,4 +1,3 @@
 {
-    "appService.defaultWebAppToDeploy": "/subscriptions/c193a2be-3efa-40e0-a4ba-f34e6f3df069/resourceGroups/pedidos/providers/Microsoft.Web/sites/back-appwebsite",
     "appService.deploySubpath": "publish"
 }

@@ -82,6 +82,12 @@ namespace Pedidos_back.Controllers
                 datos = datos.OrderByDescending(x => x.Vigente);
             }
 
+            /*if (vigente == "true") 
+            {
+                datos = repository.GetAll().Where(x =>
+                x.Vigente == true);
+            }*/
+
             int count = repository.GetAll().Where(x => texto == null || 
                 x.Codigo.ToLower().Contains(texto.ToLower()) || 
                 x.Nombre.ToLower().Contains(texto.ToLower())
@@ -97,6 +103,12 @@ namespace Pedidos_back.Controllers
             };
 
             return Ok(result);
+        }
+
+        [HttpGet("vigente")]
+        public virtual IActionResult TodosVigente()
+        {
+            return Ok(repository.GetAll().Where(x => x.Vigente == true));
         }
         
     }
